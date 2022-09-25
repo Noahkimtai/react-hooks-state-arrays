@@ -6,11 +6,26 @@ function SpicyFoodList() {
 
   function handleAddFood() {
     const newFood = getNewRandomSpicyFood();
-    console.log(newFood);
+    setFoods([...foods, newFood]);
   }
 
+  function handleRemoveFood(foodid){
+    setFoods(foods.filter(food=>food.id !== foodid))
+  }
+
+/*   function handleHeatLevel(id){
+   const newFoodArray = foods.map((food) =>{
+    if (id==food.id){
+      return{...food,
+      heatLevel: heatLevel+1
+    }}
+    else{
+      return food
+    }})
+    setFoods(newFoodArray); */
+
   const foodList = foods.map((food) => (
-    <li key={food.id}>
+    <li key={food.id} onClick={() => handleRemoveFood(food.id)}>
       {food.name} | Heat: {food.heatLevel} | Cuisine: {food.cuisine}
     </li>
   ));
@@ -18,6 +33,14 @@ function SpicyFoodList() {
   return (
     <div>
       <button onClick={handleAddFood}>Add New Food</button>
+      <select name="filter">
+        <option value="All">All</option>
+        <option value="American">American</option>
+        <option value="Sichuan">Sichuan</option>
+        <option value="Thai">Thai</option>
+        <option value="Mexican">Mexican</option>
+      </select>
+
       <ul>{foodList}</ul>
     </div>
   );
